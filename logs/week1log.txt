@@ -1,0 +1,51 @@
+Week 1 Log — CAP6415 F25
+Period: Nov 3–Nov 9, 2025  (Week 1 ends Sun Nov 9)
+
+1) Admin & Repository
+- Created public GitHub repo: CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades
+  URL: https://github.com/CDgonva99/CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades
+- Set GitHub “Description” and Topics (computer-vision, architecture, facade, materials, synthetic-data, sim-to-real, domain-randomization, pytorch, grad-cam, touchdesigner).
+- Pushed initial scaffold (README, configs, src/, td/, results/, logs/).
+- Emailed the repository URL to the professor as requested in the course instructions.
+
+2) Environment & Tooling
+- Created a clean Python environment (pip/venv).
+- Installed dependencies from requirements.txt; verified imports (torch, torchvision, yaml, sklearn, opencv, etc.).
+
+3) Sanity Checks 
+- Verified TouchDesigner integration path:
+    make td-demo
+  In TD: added OSC In DAT (port 8000) with callbacks, used td/oscin1_callbacks.py to parse JSON,
+  confirmed label/confidence updating a Table DAT (cv_state) in real time.
+
+4) Data & Classes 
+- Finalized 5 material classes: brick, glass, concrete, metal, vegetation.
+- Prepared local folder layout for natural data (not committed to Git):
+    data/natural/{brick,glass,concrete,metal,vegetation}
+
+5) Planning & Project Management
+- Defined Week-by-Week plan aligned to course deadlines.
+  [ ] Implement datasets.py (PyTorch loaders & transforms)
+  [ ] Implement train.py (ResNet18 baseline, early stop, save best)
+  [ ] Collect full NAT dataset & split (train/val/test)
+  [ ] Generate SYN dataset (domain randomization)
+  [ ] Train NAT/SYN/MIX and evaluate on NAT test
+  [ ] Grad-CAM overlays & error taxonomy
+  [ ] Latency measurement & best-model selection
+  [ ] TouchDesigner demo with real model
+  [ ] Record final video; polish README/results/repro steps
+
+6) Notes / Risks observed
+- NAT collection availability may be uneven across classes; we’ll balance via targeted collection and augmentations.
+- SYN realism vs. speed trade-off: start with fast, domain-randomized textures; upgrade if time allows.
+
+7) Next Week (Week 2) — Objectives
+- Implement datasets.py with transforms/augments.
+- Implement a working training loop in train.py (ResNet18, ImageNet init, early stop).
+- Collect the full NAT split (target ~250 train / 50 val / 50 test per class; minimum 150/40/40 if time-constrained).
+- Train a NAT-only baseline (5–10 epochs), export metrics (accuracy, macro/per-class F1) and a confusion matrix to results/.
+
+
+
+
+logs: add week1log.tx
