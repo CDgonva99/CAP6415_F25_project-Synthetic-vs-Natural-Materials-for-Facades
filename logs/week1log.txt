@@ -4,7 +4,7 @@ Period: Nov 3–Nov 9, 2025  (Week 1 ends Sun Nov 9)
 1) Admin & Repository
 - Created public GitHub repo: CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades
   URL: https://github.com/CDgonva99/CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades
-- Set GitHub “Description” and Topics (computer-vision, architecture, facade, materials, synthetic-data, sim-to-real, domain-randomization, pytorch, grad-cam, touchdesigner).
+- Set GitHub “Description”
 - Pushed initial scaffold (README, configs, src/, td/, results/, logs/).
 - Emailed the repository URL to the professor as requested in the course instructions.
 
@@ -20,7 +20,7 @@ Period: Nov 3–Nov 9, 2025  (Week 1 ends Sun Nov 9)
 
 4) Data & Classes 
 - Finalized 5 material classes: brick, glass, concrete, metal, vegetation.
-- Prepared local folder layout for natural data (not committed to Git):
+- Prepared local folder layout for natural data:
     data/natural/{brick,glass,concrete,metal,vegetation}
 
 5) Planning & Project Management
