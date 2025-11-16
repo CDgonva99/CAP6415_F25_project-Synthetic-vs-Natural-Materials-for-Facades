@@ -1,1 +1,0 @@
-Week 1 (ending Nov 9, 2025): repo created, env ready, TD OSC dry-run OK.
