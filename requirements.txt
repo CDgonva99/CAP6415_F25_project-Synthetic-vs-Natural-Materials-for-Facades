@@ -8,3 +8,4 @@ pyyaml
 scikit-learn
 python-osc
 Pillow
+TD - Touchdesigner - Installed
