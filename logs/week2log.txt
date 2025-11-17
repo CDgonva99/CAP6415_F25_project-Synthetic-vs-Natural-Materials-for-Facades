@@ -5,7 +5,7 @@ Period: Nov 10–Nov 16, 2025  (Week 2 ends Sun Nov 16)
 - Environment & GPU
   • Removed CPU-only builds (pytorch, torchvision, pytorch-mutex=cpu) and installed CUDA runtime:
     pytorch, torchvision, pytorch-cuda=12.1 from pytorch + nvidia channels.
-  • Confirmed GPU end-to-end:
+  • Confirmed GPU end-to-end.
 
 - TouchDesigner (OSC) Demo
   • Implemented OSC sender (src/infer_td.py) streaming JSON {label, confidence} to /cv/pred.
@@ -57,6 +57,7 @@ Period: Nov 10–Nov 16, 2025  (Week 2 ends Sun Nov 16)
 - Generate SYN dataset with domain randomization.
 - Train SYN-only and MIX (50/50); compare on the NAT test set.
 - Start Grad-CAM overlays; set up TD swap (dummy -> real model stream).
+
 
 
 
