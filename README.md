@@ -22,3 +22,16 @@ python .\src\train.py --config .\configs\eval.yaml --eval
 ### Latency (batch=1)
 python .\src\latency_probe.py --config .\configs\eval.yaml
 
+
+## Usage (PowerShell)
+
+### Train (NAT-only baseline)
+conda activate cv-facades
+python .\src\train.py --config .\configs\train_nat.yaml
+
+### Evaluate on NAT test
+python .\src\train.py --config .\configs\eval.yaml --eval
+
+### Latency (batch=1)
+python .\src\latency_probe.py --config .\configs\eval.yaml
+
