@@ -1,6 +1,5 @@
 ﻿"""
 Dataset utilities (ImageFolder) and DataLoaders.
-All comments in English.
 """
 from typing import Tuple, List
 from torch.utils.data import DataLoader
@@ -53,3 +52,4 @@ def build_test_loader(test_dir: str, img_size: int,
     dl = DataLoader(ds, batch_size=batch_size, shuffle=False,
                     num_workers=num_workers, pin_memory=True)
     return dl, ds.classes
+
