@@ -21,9 +21,10 @@ websocket-client
 
 TD-TOUCHDESIGNER Non-commercial (free) version installed
 
+-------------------------------------------------------------
+
 ## Instructions and commands for a propper execution of the program
 As it is explained in the video the programm runs from .the terminal/powershell.
-This section is meant to be commends to copy them and run the program as easy as possible.
 
 * IMPORTANT
 0) Download the repo from this link in Google drive. Due to size restrictions in GitHub this was the best way to be able to provide the full functional program. Sorry for the inconvinience.
@@ -58,7 +59,12 @@ cd "$env:USERPROFILE\Documents\CAP6415_F25_project-Synthetic-vs-Natural-Material
 
 
 
-5) Train
+5) Create the synthetic facades training images
+python .\make_synthetic_facades.py
+
+
+
+6) Train
   Nat Only
   - python .\src\train.py --config .\configs\train_nat.yaml
   Syn Only
@@ -68,13 +74,13 @@ cd "$env:USERPROFILE\Documents\CAP6415_F25_project-Synthetic-vs-Natural-Material
 
 
 
-6) Evaluation report (Nat-Test)
+7) Evaluation report (Nat-Test)
   NAT
   - python .\src\eval_report.py --config .\configs\eval.yaml
 
 
 
-7) Grad-cam Libraries
+8) Grad-cam Libraries
   NAT CAMs over NAT test images (no limit, all the images)
   - (Get-Content .\configs\eval.yaml) -replace 'checkpoint:.*','checkpoint: checkpoints\best_nat.ckpt' |
   Set-Content .\configs\eval.yaml
@@ -92,25 +98,29 @@ python .\src\gradcam.py --config .\configs\eval.yaml --images_dir .\data\nat\tes
 
 
 
-8) Open the TOUCHDESIGNER file
+9) Open the TOUCHDESIGNER file
   - Inside the folder  \td-> open the file cv_facades_demo
   - Be sure the program is running and responding.
+  - Install TD dependencies - 
+import sys, subprocess
+pkgs = ["python-osc", "websockets", "websocket-client"]
+subprocess.run([sys.executable, "-m", "pip", "install", *pkgs])
 
 
 
-9) Start server to communicate with TD
+
+10) Start server to communicate with TD
   - python -u -m src.inference_server --mode model --listen_port 8000 --td_port 9000 --config .\configs\eval.yaml
 
 
 
-10) Change Inputs to the Movie File In TOPs:
+11) Change Inputs to the Movie File In TOPs:
   - Better explained in the video.
 
 
 
-11)
-  - Enjoy of the TD interface and the 3d point-cloud-based model.
-
+12)
+  - Enjoy the TD interface and the 3d point-cloud-based model.
 
 
 
