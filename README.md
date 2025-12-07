@@ -61,7 +61,7 @@ Issues, limitations, and debugging
     - Simplified some TD networks so the 3D point-cloud scenes run smoothly.
 
 --------------------------------------------------
-5. Final status and future iterations…
+Final status and future iterations…
 --------------------------------------------------
 - The project is functionally complete:
   - All three experiment types (NAT, SYN, MIX) trained and evaluated.
