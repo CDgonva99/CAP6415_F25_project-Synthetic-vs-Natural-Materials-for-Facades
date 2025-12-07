@@ -23,25 +23,42 @@ TD-TOUCHDESIGNER Non-commercial (free) version installed
 
 ## Instructions and commands for a propper execution of the program
 As it is explained in the video the programm runs from .the terminal/powershell.
+This section is meant to be commends to copy them and run the program as easy as possible.
 
 * IMPORTANT
+0) Download the repo from this link in Google drive. Due to size restrictions in GitHub this was the best way to be able to provide the full functional program. Sorry for the inconvinience.
+  - Link to download: https://drive.google.com/drive/folders/1K96iHcRvNWw95lTuaeieKBISOuCKvOY5
+
 1) The .zip folder should be downloaded and extracted in: 
   - C:/Users/*use your profile*/Documents/CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades/
   - If the repo is downloaded in C: -> Users -> your user -> Documents 
   - Everything should run smoothly
 
+
+
 2) Open POWERSHELL-Terminal on Windows
+
+
 
 3) Create the environment and activate it:
   - conda create -n cv-facades python=3.10 -y
   - conda activate cv-facades
+
+
 
 3.5) Install dependencies (Recommended)
   - pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
   - pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
   - pip install numpy scikit-learn matplotlib pyyaml pillow opencv-python python-osc timm plyfile
 
-4) Train
+
+
+4) Direct the powershell to our Repo folder(Use next command no need to change anything)
+cd "$env:USERPROFILE\Documents\CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades"
+
+
+
+5) Train
   Nat Only
   - python .\src\train.py --config .\configs\train_nat.yaml
   Syn Only
@@ -49,32 +66,49 @@ As it is explained in the video the programm runs from .the terminal/powershell.
   Mix (Nat+Syn)
   - python .\src\train.py --config .\configs\train_mix.yaml
 
-5) Evaluation report (Nat-Test)
+
+
+6) Evaluation report (Nat-Test)
   NAT
-  - python .\src\eval_report.py --config .\configs\eval.yaml --model best_nat.ckpt --outdir .\results\nat\eval
-  SYN (sim→real: still evaluated on NAT test)
-  - python .\src\eval_report.py --config .\configs\eval.yaml --model best_syn.ckpt --outdir .\results\syn\eval
-  MIX
-  - python .\src\eval_report.py --config .\configs\eval.yaml --model best_mix.ckpt --outdir .\results\mix\eval
+  - python .\src\eval_report.py --config .\configs\eval.yaml
 
-6) Grad-cam Libraries
+
+
+7) Grad-cam Libraries
   NAT CAMs over NAT test images (no limit, all the images)
-  - python .\src\gradcam.py --config .\configs\eval.yaml --images_dir .\data\nat\test --out .\results\nat\cams --limit 0 --model .\checkpoints\best_nat.ckpt
+  - (Get-Content .\configs\eval.yaml) -replace 'checkpoint:.*','checkpoint: checkpoints\best_nat.ckpt' |
+  Set-Content .\configs\eval.yaml
+python .\src\gradcam.py --config .\configs\eval.yaml --images_dir .\data\nat\test --out .\results\nat\cams --limit 0
+
   SYN CAMs on same NAT test images
-  - python .\src\gradcam.py --config .\configs\eval.yaml --images_dir .\data\nat\test --out .\results\syn\cams --limit 0 --model .\checkpoints\best_syn.ckpt
+  - (Get-Content .\configs\eval.yaml) -replace 'checkpoint:.*','checkpoint: checkpoints\best_syn.ckpt' |
+  Set-Content .\configs\eval.yaml
+python .\src\gradcam.py --config .\configs\eval.yaml --images_dir .\data\nat\test --out .\results\syn\cams --limit 0
+
   MIX CAMs on same NAT test images
-  - python .\src\gradcam.py --config .\configs\eval.yaml --images_dir .\data\nat\test --out .\results\mix\cams --limit 0 --model .\checkpoints\best_mix.ckpt
+  - (Get-Content .\configs\eval.yaml) -replace 'checkpoint:.*','checkpoint: checkpoints\best_mix.ckpt' |
+  Set-Content .\configs\eval.yaml
+python .\src\gradcam.py --config .\configs\eval.yaml --images_dir .\data\nat\test --out .\results\mix\cams --limit 10
 
-7) Latency Probe
-  - python .\src\latency_probe.py --config .\configs\eval.yaml --img .\data\nat\test\brick\brick_0001.jpg --trials 50 --model .\checkpoints\best_mix.ckpt
 
-8) Start server to communicate with TD
+
+8) Open the TOUCHDESIGNER file
+  - Inside the folder  \td-> open the file cv_facades_demo
+  - Be sure the program is running and responding.
+
+
+
+9) Start server to communicate with TD
   - python -u -m src.inference_server --mode model --listen_port 8000 --td_port 9000 --config .\configs\eval.yaml
 
-9) Change Inputs to the Movie File In TOPs:
+
+
+10) Change Inputs to the Movie File In TOPs:
   - Better explained in the video.
 
-10)
+
+
+11)
   - Enjoy of the TD interface and the 3d point-cloud-based model.
 
 
