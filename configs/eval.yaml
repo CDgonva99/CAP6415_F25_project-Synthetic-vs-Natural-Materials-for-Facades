@@ -1,6 +1,0 @@
-experiment: eval_best
-data:
-  test_dir: data/natural_test
-  classes: [brick, glass, concrete, metal, vegetation]
-eval:
-  checkpoint: checkpoints/best.ckpt
