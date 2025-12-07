@@ -1,0 +1,49 @@
+{
+  "val_accuracy": 0.8785046728971962,
+  "val_f1_macro": 0.8680280638901328,
+  "per_class": {
+    "brick": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 29.0
+    },
+    "concrete": {
+      "precision": 0.7741935483870968,
+      "recall": 0.8888888888888888,
+      "f1-score": 0.8275862068965517,
+      "support": 27.0
+    },
+    "glass": {
+      "precision": 0.8571428571428571,
+      "recall": 0.75,
+      "f1-score": 0.8,
+      "support": 16.0
+    },
+    "metal": {
+      "precision": 0.8125,
+      "recall": 0.6842105263157895,
+      "f1-score": 0.7428571428571429,
+      "support": 19.0
+    },
+    "vegetation": {
+      "precision": 0.9411764705882353,
+      "recall": 1.0,
+      "f1-score": 0.9696969696969697,
+      "support": 16.0
+    },
+    "accuracy": 0.8785046728971962,
+    "macro avg": {
+      "precision": 0.8770025752236379,
+      "recall": 0.8646198830409357,
+      "f1-score": 0.8680280638901328,
+      "support": 107.0
+    },
+    "weighted avg": {
+      "precision": 0.8795685518705524,
+      "recall": 0.8785046728971962,
+      "f1-score": 0.8763949982770479,
+      "support": 107.0
+    }
+  }
+}
