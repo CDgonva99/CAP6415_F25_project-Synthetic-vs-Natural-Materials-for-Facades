@@ -68,8 +68,7 @@ Final status and future iterations…
   - Metrics, confusion matrices, and Grad-CAM examples saved under results/.
   - Real-time classifier integrated with a TouchDesigner façade demo in 3D/point-cloud form.
   - Repo structure and README prepared for grading and reproducibility.
-- Next steps:
-  - Record the final 10–20 minute demo video walking through:
+
 - Future iterations and research…
   - Extend to semantic segmentation,
   - Improve synthetic data with more realistic 3D/lighting,
