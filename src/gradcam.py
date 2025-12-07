@@ -1,7 +1,6 @@
 ﻿# src/gradcam.py
 # Grad-CAM for ResNet-18 on folder of images.
 # Saves overlays to --out. Works with checkpoints trained in this project.
-# Comments are in English (per your preference).
 
 import argparse
 from pathlib import Path
