@@ -1,0 +1,64 @@
+Acknowledgements - Attributions & References
+Core ML Architecture & Training
+
+	ResNet-18 backbone (ImageNet pretraining available via torchvision):
+	Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun. Deep Residual Learning for Image Recognition. CVPR 2016.
+
+	Grad-CAM visual explanations (used for CAM overlays):
+	Ramprasaath R. Selvaraju, et al. Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization. ICCV 2017.
+
+
+Depth Estimation (MiDaS / DPT)
+
+	MiDaS family & DPT-Hybrid model (loaded via torch.hub):
+	René Ranftl, Alexey Bochkovskiy, Vladlen Koltun. Vision Transformers for Dense Prediction. ICCV 2021.
+	René Ranftl, Katrin Lasinger, David Hafner, Konrad Schindler, Vladlen Koltun. Towards Robust Monocular Depth Estimation: Mixing Datasets for Zero-shot Cross-dataset Transfer. TPAMI 2022.
+	Implementation credited to intel-isl/MiDaS (Torch Hub).
+	Additional CNN/Vision components via timm (Ross Wightman).
+
+Notes: We do not vendor MiDaS; we invoke it through torch.hub, which fetches model code/weights to the local cache on first use. We export 16-bit PNG depth and PLY point clouds for TouchDesigner.
+
+Libraries & Tools
+
+	PyTorch (training, inference, AMP):
+	Paszke et al. PyTorch: An Imperative Style, High-Performance Deep Learning Library. NeurIPS 2019.
+
+	torch, torchvision, torchaudio ecosystem where applicable.
+
+	timm (vision model components used by MiDaS internals):
+	Ross Wightman. PyTorch Image Models. Ongoing project.
+
+	NumPy (array ops / metrics preparation):
+	Charles R. Harris, et al. Array programming with NumPy. Nature 2020.
+
+	scikit-learn (metrics: accuracy, F1, confusion matrix, report):
+	F. Pedregosa, et al. Scikit-learn: Machine Learning in Python. JMLR 2011.
+
+	Matplotlib (plots for confusion matrices/curves):
+	John D. Hunter. Matplotlib: A 2D graphics environment. Computing in Science & Engineering 2007.
+
+	Pillow (PIL) (image I/O & preprocessing):
+	Jeffrey A. Clark and contributors. Pillow (PIL fork).
+
+	OpenCV (optional I/O for depth EXR/PNG16):
+	Bradski. The OpenCV Library. Dr. Dobb’s Journal 2000.
+	(We save 16-bit PNG for broad compatibility; EXR requires OpenCV with OpenEXR enabled.)
+
+	python-osc (OSC client/server for TD integration):
+	Attila Vigh and contributors. python-osc.
+
+	TouchDesigner (visual runtime, instancing, OSC, CHOP/DAT/TOP/SOP graph):
+	Derivative. TouchDesigner.
+
+	Code Provenance & Licensing
+
+	Project code (training, eval, Grad-CAM wrapper, OSC inference server, TD scripts)
+	© Carlos David González Vargas, 2025. Written for educational/research purposes. Portions of the code and errorfixing were drafted with assistance from ChatGPT (GPT-5 Thinking) and then adapted/refined to fit this project’s structure and datasets.
+
+	Third-party components
+
+	PyTorch/torchvision, scikit-learn, NumPy, Matplotlib, Pillow, OpenCV, python-osc, timm are used under their respective open-source licenses (e.g., 	BSD/MIT/Apache).
+
+	MiDaS (intel-isl/MiDaS) is used via torch.hub under its repository license.
+
+	Please consult each project’s LICENSE file for precise terms.

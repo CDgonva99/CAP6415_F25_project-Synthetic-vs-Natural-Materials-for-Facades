@@ -1,0 +1,19 @@
+﻿name: cv-facades
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pytorch=2.5.1
+  - torchvision=0.20.1
+  - pytorch-cuda=12.1
+  - pip
+  - pip:
+      - numpy
+      - pillow
+      - pyyaml
+      - scikit-learn
+      - opencv-python
+      - matplotlib
+      - python-osc
