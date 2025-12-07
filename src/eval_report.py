@@ -3,7 +3,6 @@ Evaluation report utility:
 - Loads eval.checkpoint
 - Evaluates on data.test_dir
 - Saves metrics.json, confusion_matrix.(csv|png)
-Comments in English.
 """
 import argparse, json
 from pathlib import Path
@@ -70,3 +69,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
