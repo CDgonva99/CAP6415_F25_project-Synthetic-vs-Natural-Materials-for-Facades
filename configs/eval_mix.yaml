@@ -1,0 +1,2 @@
+eval:
+  checkpoint: .\checkpoints\best_mix.ckpt

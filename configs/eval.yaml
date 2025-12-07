@@ -1,0 +1,16 @@
+experiment: eval_best
+
+data:
+  test_dir: data/nat/test
+  classes:
+    - brick
+    - glass
+    - concrete
+    - metal
+    - vegetation
+
+train:
+  img_size: 224   # used by preprocessing in eval/grad-cam
+
+eval:
+  checkpoint: checkpoints\best_mix.ckpt

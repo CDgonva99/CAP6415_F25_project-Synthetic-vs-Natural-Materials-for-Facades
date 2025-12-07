@@ -1,0 +1,21 @@
+experiment: mix
+save:
+  dir: checkpoints
+data:
+  classes: [brick, glass, concrete, metal, vegetation]
+  train_dir_nat: data\nat\train
+  train_dir_syn: data\syn\train
+  val_dir: data\nat\val
+  mix_ratio: 0.5
+train:
+  img_size: 224
+  batch_size: 64
+  epochs: 12
+  early_stop_patience: 3
+  num_workers: 0
+model:
+  pretrained: true
+optim:
+  name: adam
+  lr: 0.001
+  weight_decay: 0.0001

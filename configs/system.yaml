@@ -1,0 +1,5 @@
+﻿experiment: system
+data:
+  classes: [brick, glass, concrete, metal, vegetation]
+eval:
+  checkpoint: checkpoints/best_exp.ckpt
