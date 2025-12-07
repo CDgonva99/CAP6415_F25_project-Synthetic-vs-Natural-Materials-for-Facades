@@ -1,0 +1,49 @@
+Week 3 Log — CAP6415 F25
+Period: Nov 17–Nov 23, 2025 
+
+1) Synthetic data & training
+- Generated SYN dataset with domain randomization (lighting, color jitter, scale, mild noise/occluders) under:
+  data/synthetic/{brick,glass(or wood),concrete,metal,vegetation}
+- Trained SYN-only and MIX (50/50) configurations; each run saves best checkpoint and validation metrics to:
+  results/{syn|mix}/ and updates configs/eval.yaml → eval.checkpoint
+
+2) NAT baseline carryover (context)
+- NAT-only baseline from Week 2 remains our reference:
+  Test (NAT): accuracy = 0.80, macro-F1 = 0.7333
+- Confusion pattern (not addressed this week): vegetation ↔ concrete misclassifications.
+  We note this and expect improvement as the NAT dataset is completed/cleaned.
+
+3) Evaluation & comparisons
+- Evaluated current best checkpoints on the held-out NAT test set (uniform protocol).
+- Collected metrics/CMs under results/exp/eval and comparison CSVs (NAT vs SYN vs MIX) for reporting.
+- Observation (qualitative): MIX appears more stable per-class than SYN-only; exact numbers will be finalized once NAT split is complete.
+
+4) Grad-CAM 
+- Implemented robust Grad-CAM over last conv (ResNet-18):
+  src/gradcam.py → results/mix/cams/, results/nat/cams/, results/syn/cams/
+- Qualitative findings:
+  • Brick: attention on grout lines/joints and repetitive texture blocks.
+  • Concrete: attention on pore/aggregate textures and edges.
+  • Metal: attention on panel seams/mullions and scratches.
+  • Vegetation: attention on leaf edges/high-frequency regions or to dark áreas, created by shadows.
+
+5) TouchDesigner (real-time demo)
+- Switched TD demo from dummy to real model outputs:
+  • Sender: src/infer_td.py --mode model (from folder or webcam) → OSC JSON {label, confidence}
+  • TD receive: OSC In DAT (port 8000) with callbacks Text DAT `oscin1_callbacks` (function onReceiveOSC)
+  • State table: `cv_state` (label, confidence)
+  • Visualization: Switch TOP (`material_switch`) driven by label mapping with a confidence gate (≥0.80) to reduce flicker.
+
+6) Repo & code hygiene
+- Consolidated src/train.py (supports NAT/SYN/MIX) with safe torch.amp usage and safe checkpoint loading.
+- Fixed Grad-CAM dtype/shape issues
+- infer_td.py now supports --mode {dummy,model}, --source_dir, and --camera (Camera usage was not implemented and finalized due to time restrictions); python-osc and opencv installed(In the computer and inside TouchDesigner, somehow is readed as different pythons)
+
+7) Risks / notes
+- Domain gap persists for certain conditions (e.g., low-texture concrete vs vegetation backgrounds). MIX training is the working mitigation.
+- NAT dataset expansion in progress; we expect per-class F1 to stabilize once the split is fully populated and cleaned.
+
+8) Next week (Week 4) — preliminary results plan
+- Finalize NAT train/val/test splits (The quantity of the dataset was reduced and we opted for a quality over quantity approach with images form the internet).
+- Re-train NAT/SYN/MIX on the fuller NAT split; lock best checkpoints.
+- Record a 30–60s TD demo clip (real predictions) and add to results/.

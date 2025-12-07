@@ -1,0 +1,113 @@
+Week 5 Log — CAP6415 F25
+Period: Dec 1–Dec 7, 2025
+
+--------------------------------------------------
+DISCLAIMER
+--------------------------------------------------
+- This week, we completed the final TouchDesigner (TD) implementation, which revealed the program’s capabilities and potential. Because of that, the project did not stop at simply changing visuals, depending on the redicted class, but it pushed further. With the development of a point-cloud–based model, we can analyze the 3d information provided and potentially go even further by converting images into 3D models using real-time depth information extracted from the images. From this point on, we could feed 3d systems. The possibilities are endless.
+
+The final step we implemented was importing the point file generated from the analyzed image into TouchDesigner. The program still interprets it differently than expected, but future iterations look promising. More details on how it works are included in the video.
+--------------------------------------------------
+
+
+1) TouchDesigner integration (2D façade + 3D / point-cloud setup)
+- Created a dedicated TouchDesigner project for the façade demo. The project has two main paths:
+  1) A panel view with the informaiton changing values and colors depending on the analized image.
+  2) A 3D / point-cloud-based façade representation (to connect with geometry data interpretation nodes).
+
+- Communication / control:
+  - Set up an OSC In DAT to receive JSON messages from the Python real-time inference script.
+  - Parsed the JSON with a DAT → CHOP conversion:
+    - Extracted the "material" field (brick, glass, concrete, metal, vegetation).
+    - Extracted the "confidence" scalar and, when available, the full probability vector.
+  - Built a small “router” network:
+    - A Switch CHOP selects which material is currently active, driven by the material label.
+  - Added a “material mapping” Table DAT:
+    - Each row = one material class.
+    - Columns define façade parameters per material (color palette index).
+    - The active row is looked up using the current material label and used to drive the visual parameters in the project.
+
+- 2D façade visualization:
+  - Created a simple façade grid using SOPs or a replicator network (e.g., a subdivided rectangle rendered as windows/panels).
+  - Used a TOP chain (Noise TOPs, Ramp TOPs, Displace TOPs) to create texture behaviors per material:
+    - brick → small, regular blocks with subtle noise and low motion.
+    - glass → brighter, more reflective surfaces with gentle animated highlights.
+    - concrete → flatter, more desaturated texture with low-frequency noise.
+    - metal → panelized look with specular reflections.
+    - vegetation → organic, noisy patterns with more movement and layered detail.
+  - Connected the CHOP parameters (from the material mapping table) to the TOP/SOP parameters:
+    - Example: panel density, brightness, displacement strength, speed of animation.
+  - Rendered the façade using a Render TOP, prepared specifically to be recorded or screen-captured in the final video.
+
+- 3D / point-cloud façade visualization:
+  - Use the server and midas to generate the point-cloud–based
+  - Import the point clouds into TouchDesigner using a Point File In SOP.
+  - Built a 3D scene with:
+    - A Geometry COMP that holds the point cloud SOP.
+    - A Camera COMP and Light COMP to frame and illuminate the façade.
+    - A Material COMP (e.g., Constant or Phong MAT) whose color and other attributes are driven by the material prediction.
+  - Used instancing / point attributes so that:
+    - Points can change color depending on the predicted class. (still in process)
+    - Each material type corresponds to a different color palette or shading mode for the point cloud façade
+
+
+2) Repository cleanup and documentation
+- Organized the repo so that it is easy to understand and reproduce
+  - Updated README.md: including instructions and commands on how to reproduce the Project.
+- Double-checked that each weekly log correctly reflects the work done.
+
+--------------------------------------------------
+Final experiments and results snapshot
+--------------------------------------------------
+- NAT model:
+  - Best overall performance on NAT test set.
+  - Around ~0.8 test accuracy and macro F1 in the low 0.7x range.
+  - Confusion mainly between glass and concrete.
+- SYN model:
+  - Lower accuracy and macro F1 compared to NAT.
+  - Still demonstrates that synthetic images encode meaningful texture/structure signals.
+- MIX model:
+  - Improves over SYN-only training and narrows the gap with NAT.
+  - Particularly helpful for classes where synthetic patterns transfer reasonably to real images.
+- Inference:
+  - Real-time script runs single-frame inference fast enough to support interactive behavior in TouchDesigner.
+
+--------------------------------------------------
+Issues, limitations, and debugging
+--------------------------------------------------
+- Domain gap:
+  - Despite improvements, a visible gap remains between SYN and NAT performance.
+  - Current synthetic textures do not capture all complexities of real façades (mixed materials, occlusions, weathering, clutter).
+- Mixed materials and ambiguous labels:
+  - Images with multiple materials (for exmaple glass, that normally is in context with other materials or is above another texture) are inherently ambiguous.
+  - This leads to persistent confusion between certain classes even with NAT data.
+- Real-time + TD setup:
+  - Time spent debugging:
+    - Correct image transforms to match training preprocessing.
+    - Synchronization between Python and TouchDesigner OSC/WebSocket messages.
+    - Mapping of material labels to visual parameters and smoothing changes to avoid flicker.
+  - Needed to carefully manage performance:
+    - Ensured that the PyTorch model runs with no_grad and eval mode.
+    - Simplified some TD networks so both the 2D façades and 3D point-cloud scenes run smoothly.
+
+--------------------------------------------------
+5. Final status and future iterations…
+--------------------------------------------------
+- The project is functionally complete:
+  - All three experiment types (NAT, SYN, MIX) trained and evaluated.
+  - Metrics, confusion matrices, and Grad-CAM examples saved under results/.
+  - Real-time classifier integrated with a TouchDesigner façade demo in 3D/point-cloud form.
+  - Repo structure and README prepared for grading and reproducibility.
+- Next steps:
+  - Record the final 10–20 minute demo video walking through:
+- Future iterations and research…
+  - Extend to semantic segmentation,
+  - Improve synthetic data with more realistic 3D/lighting,
+  - Improve natural data with bigger datasets
+  - Improve the readability of the point-cloud–based model and the representation of the information in real time.
+  - Continue with the analysis part of the 3D models.
+
+
+
+
+THANK YOU!

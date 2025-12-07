@@ -1,0 +1,59 @@
+Week 2 Log — CAP6415 F25
+Period: Nov 10–Nov 16, 2025 
+
+0) Carryover from Week 1 (completed in Week 2)
+- Environment & GPU
+  • Removed CPU-only builds (pytorch, torchvision, pytorch-mutex=cpu) and installed CUDA runtime:
+    pytorch, torchvision, pytorch-cuda=12.1 from pytorch + nvidia channels.
+  • Confirmed GPU end-to-end.
+
+- TouchDesigner (OSC) Demo
+  • Implemented OSC sender (src/infer_td.py) streaming JSON {label, confidence} to /cv/pred.
+  • Implemented TD callback (td/oscin1_callbacks.py) writing to a cv_state Table DAT.
+  • Verified end-to-end loop: Python → OSC → TD (live updates on port 8000).
+
+- Configs & Classes
+  • Created 5 classes: brick, glass, concrete, metal, vegetation.
+  • Authored baseline configs:
+    - configs/train_nat.yaml (NAT-only)
+    - configs/train_syn.yaml (SYN-only)
+    - configs/train_mix.yaml (MIX 50/50)
+    - configs/eval.yaml (checkpoint + NAT test)
+
+- Local Smoke Dataset (procedural)
+  • Created local folder structure for train/val/test under data/.
+  • Wrote scripts/make_smokeset.py to generate placeholder textures per class with domain randomization (15 train / 5 val / 5 test per class).
+  • Built quick gallery & contact sheets (scripts/gallery_smokeset.py) -> results/figures/gallery/index.html.
+  • Counted per split/class and exported CSV -> results/figures/smokeset_counts.csv.
+
+- Reposiroty
+  • Ensured scaffold folders (src/, configs/, results/, td/, logs/, scripts/).
+  • README.md includes Abstract + Quickstart.
+
+1) Code implemented (Week 2 core)
+- src/datasets.py — ImageFolder loaders + transforms (ImageNet norm), GPU-friendly DataLoaders.
+- src/train.py — ResNet18 (ImageNet init), mixed precision (torch.amp), early stopping, best checkpoint, metrics/CM export.
+- src/eval_report.py — Standalone test reporter: per-class CSV, CM (PNG/CSV), sklearn report (JSON).
+- src/latency_probe.py — Batch=1 forward-pass latency probe (ms/image) using the best checkpoint.
+- Deprecation fixes: migrated to torch.amp.autocast('cuda', …) and torch.amp.GradScaler('cuda', …).
+
+2) Data status (NAT)
+- We used the Week-1 smoke/early NAT split for training.
+- Full NAT dataset creation is in progress.
+
+3) Training — NAT-only Baseline (ResNet18)
+- Settings: img=224, bs=64, epochs=8, patience=3, Adam lr=1e-3, wd=1e-4; device: RTX 4070 Laptop (CUDA).
+- Validation (best): F1_macro = **0.7333**, acc ≈ **0.80**.
+- Best checkpoint auto-saved: `checkpoints\best_exp.ckpt`.
+- Val artifacts: `results\nat\metrics.json`, `results\nat\confusion_matrix.png`, `results\nat\confusion_matrix.csv`.
+
+4) Observations / Risks (tracked, not fixing this week)
+- Confusion matrix shows consistent **vegetation <-> concrete** misclassifications.
+  Not addressing this in Week 2; improvements expected after completing the NAT dataset (more balanced and diverse samples).
+
+5) Next week (Week 3) — Objectives
+- Finish Datasets NAT-SYN-MIX - due to time probably we will have to use internet images, the final objective is not creating a dataset is implementing it with TOUCHDESIGNER
+- Generate SYN dataset with domain randomization.
+- Train SYN-only and MIX (50/50); compare on the NAT test set.
+- Start Grad-CAM overlays; set up TD swap (dummy -> real model stream).
+

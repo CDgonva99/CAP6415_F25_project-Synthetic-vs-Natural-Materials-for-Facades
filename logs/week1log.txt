@@ -1,0 +1,41 @@
+Week 1 Log — CAP6415 F25
+Period: Nov 3–Nov 9, 2025 
+
+1) Admin & Repository
+- Created public GitHub repo: CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades
+  URL: https://github.com/CDgonva99/CAP6415_F25_project-Synthetic-vs-Natural-Materials-for-Facades
+- Set GitHub “Description”
+- Pushed initial scaffold (README, configs, src/, td/, results/, logs/).
+- Emailed the repository URL to the professor as requested in the course instructions.
+
+2) Environment & Tooling
+- Created a clean Python environment (pip/venv).
+- Installed dependencies from requirements.txt; verified imports (torch, torchvision, yaml, sklearn, opencv, etc.).
+
+3) Sanity Checks 
+- Verified TouchDesigner integration path:
+    make td-demo
+  In TD: added OSC In DAT (port 8000) with callbacks, used td/oscin1_callbacks.py to parse JSON,
+  confirmed label/confidence updating a Table DAT (cv_state) in real time.
+
+4) Data & Classes 
+- 5 material classes: brick, glass, concrete, metal, vegetation.
+- Prepared local folders for natural and synthetic data:
+    data/nat/test/{brick,glass,concrete,metal,vegetation}
+    data/nat/train/{brick,glass,concrete,metal,vegetation}
+    data/nat/val/{brick,glass,concrete,metal,vegetation}
+
+    data/syn/train/{brick,glass,concrete,metal,vegetation}
+    data/syn/val/{brick,glass,concrete,metal,vegetation}
+
+
+6) Notes / Risks observed
+- NAT collection availability may be uneven across classes.
+- SYN realism vs. speed trade-off: start with fast, domain-randomized textures; upgrade if time allows.
+
+7) Next Week (Week 2) — Objectives
+- Implement datasets.py with transforms/augments.
+- Implement a working training loop in train.py (ResNet18, ImageNet init, early stop).
+- Collect the full NAT split (target ~250 train / 50 val / 50 test per class; this may change if time-constrained).
+- Train a NAT-only baseline (5–10 epochs), export metrics (accuracy, macro/per-class F1) and a confusion matrix to results/.
+

@@ -1,0 +1,64 @@
+Week 4 Log — CAP6415 F25
+Period: Nov 24–Nov 30, 2025
+
+
+1) Refactored training pipeline
+- Consolidated training code into src/train.py so that we can reuse it for all experiments (NAT, SYN, MIX).
+- Added configuration-driven setup using YAML files in configs/ (e.g. configs/train_nat.yaml, configs/train_syn.yaml).
+- Standardized output paths so each experiment writes to results/<exp_name>/ with metrics, confusion matrix, and checkpoints.
+
+2) Dataset finalization and NAT baseline
+- Finished curating the NAT dataset:
+  - Verified per-class folders for: brick, glass, concrete, metal, vegetation.
+  - Removed corrupted / low-quality samples and fixed a few mislabeled images.
+- Due to time - final natural dataset total number of images:
+  -{brick(train:136, val:29, test:30), concrete(train:124, val:27, test:26), glass(train:75, val:16, test:16), metal(train:88, val:19, test:18), vegetation(train:74, val:16, test:15)}
+- Re-ran the NAT baseline training (ResNet18) using the finalized NAT dataset.
+- Confirmed that performance is stable and consistent with earlier NAT runs (around ~0.8 test accuracy and macro F1 in the low 0.7x range).
+- Saved the best NAT checkpoint and updated the NAT metrics files in results/nat/.
+
+3) Synthetic (SYN) pipeline setup
+- Organized the procedurally generated façade images into a similar folder structure for the SYN dataset.
+- Verified that both NAT and SYN datasets can be loaded with the same FacadesDataset class and dataloaders.
+- Ran small sanity-check loops to confirm class balance, image shapes, and label mapping.
+
+4) Full experiment suite: NAT vs SYN vs MIX
+- Completed three main experimental tracks using the same training script and different configs:
+  1) NAT: train and evaluate on natural images.
+  2) SYN: train on synthetic images, evaluate on NAT validation/test sets.
+  3) MIX: pretrain on synthetic images, then fine-tune on a smaller NAT subset, evaluate on full NAT test set.
+- For each experiment:
+  - Used the same ResNet18 backbone and similar training hyperparameters.
+  - Logged training/validation curves, final metrics, and confusion matrices.
+  - Exported:
+    - metrics.json
+    - confusion_matrix.png
+    - example Grad-CAM overlays and sample predictions.
+- Observations:
+  - NAT remains the strongest reference, as expected.
+  - SYN performs clearly better than random but below NAT, confirming that synthetic data alone is informative but not fully aligned with the NAT domain.
+  - MIX improves over SYN and closes some of the gap toward NAT, showing that SYN pretraining + NAT fine-tuning is a viable strategy when real data is limited.
+
+5) Grad-CAM finalization
+- Extended Grad-CAM usage to all three experiment types (NAT, SYN, MIX):
+  - Generated overlays for representative examples of each class.
+  - Stored them under results/.../cams/ for documentation.
+- Qualitative findings:
+  - For brick and metal, the attention maps consistently highlight the correct material regions.
+  - For vegetation and concrete, Grad-CAM often shows overlapping focus, matching the confusion seen in the confusion matrices.
+- Selected a small set of Grad-CAM images to include in the final report and demo video.
+
+6) Real-time inference script
+- Implemented a dedicated real-time inference script (e.g., src/infer_realtime.py):
+  - Loads a trained checkpoint (typically the MIX model).
+  - Captures frames either from:
+    - a webcam (still on testing, deprecated for this semester, Will be implemented in the future), or
+    - a folder / video stream.
+  - Applies the same transforms as in training (resize, crop, normalization).
+  - Runs inference with batch size 1 and returns:
+    - predicted class label,
+    - confidence scores / softmax probabilities.
+  - Sends the prediction to TouchDesigner using OSC or WebSocket as a JSON message:
+    - { "material": "<class_name>", "confidence": <float>, "probs": { ... } }
+- Ensured that the model runs in eval mode with gradients disabled (no_grad) to minimize overhead.
+- Tested the script on multiple example images and short video segments to confirm stability and consistent predictions.
