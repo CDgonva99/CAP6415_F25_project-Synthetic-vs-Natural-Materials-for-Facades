@@ -24,6 +24,10 @@ We train and compare three convolutional neural network models (based on **ResNe
 All models are evaluated on a **held-out NAT test set**. We report **accuracy, macro and per-class F1**, confusion matrices, and qualitative **Grad-CAM** visualizations.  
 Finally, we deploy the best model in a **real-time pipeline** that sends predictions to **TouchDesigner**, where they drive an **interactive visualization** 3D point-cloud façades), connecting computer vision with architectural/computational design workflows and further 3d modelling from 2D images.
 
+## Instructions
+- Please read the Requirements-INSTRUCTIONS.txt to run the program properly
+
+
 ## Results
 
 --------------------------------------------------
