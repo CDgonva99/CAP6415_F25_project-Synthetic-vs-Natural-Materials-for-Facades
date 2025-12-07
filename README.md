@@ -32,7 +32,7 @@ Final experiments and results
 - NAT model:
   - Best overall performance on NAT test set.
   - Around ~0.8 test accuracy and macro F1 in the low 0.7x range.
-  - Confusion mainly between vegetation and concrete.
+  - Confusion mainly between glass and concrete.
 - SYN model:
   - Lower accuracy and macro F1 compared to NAT.
   - Still demonstrates that synthetic images encode meaningful texture/structure signals.
