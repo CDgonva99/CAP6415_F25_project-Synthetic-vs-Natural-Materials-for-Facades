@@ -1,5 +1,4 @@
 ﻿# === TouchDesigner reference callbacks (copy into a Text DAT in TD) ===
-# All comments in English.
 
 # 1) Button callback (bind this function to a Button COMP via DAT Execute or directly call from Panel Execute)
 def save_and_send():
@@ -37,3 +36,4 @@ def onReceiveOSC(dat, rowIndex, message, bytes, timeStamp, address, args, peer):
         op('facade_switch').par.index = cid
     except:
         pass
+
