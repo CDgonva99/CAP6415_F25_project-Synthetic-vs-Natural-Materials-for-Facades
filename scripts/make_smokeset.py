@@ -1,7 +1,6 @@
 ﻿"""
 Procedural smoke dataset generator (tiny, for plumbing only).
 Creates N train/val/test images per class using simple graphics cues.
-Comments in English.
 """
 from pathlib import Path
 import random
@@ -81,3 +80,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
