@@ -1,7 +1,6 @@
 ﻿"""
 Simple synthetic facade generator (faster than Blender/Unreal).
 Creates synthetic/train|val folders with randomized cues per class.
-Comments in English.
 """
 from pathlib import Path
 import random
@@ -86,3 +85,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
