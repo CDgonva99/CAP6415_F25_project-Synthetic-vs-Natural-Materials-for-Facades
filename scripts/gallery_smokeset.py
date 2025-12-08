@@ -1,7 +1,6 @@
 ﻿"""
 Simple contact-sheet gallery for a dataset folder (ImageFolder-like).
 Writes PNG grids into results/figures/gallery/.
-Comments in English.
 """
 from pathlib import Path
 from PIL import Image
@@ -35,3 +34,4 @@ def build_gallery(root, split='train', out='results/figures/gallery'):
 
 if __name__ == '__main__':
     build_gallery('data/smoke', 'train')
+
